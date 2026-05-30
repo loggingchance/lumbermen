@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumbermen OS — Field-Built Software for Forestry Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1e3220;
+    --bark: #3d2b1a;
+    --sawdust: #f5f0e8;
+    --ink: #1a1a18;
+    --muted: #5a5a52;
+    --rule: #c8c0b0;
+    --accent: #5a7a3a;
+    --accent-light: #7a9a5a;
+    --tag-bg: #e8f0e0;
+    --tag-text: #2e4820;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 400;
+    background-color: var(--sawdust);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* HEADER */
+  header {
+    background-color: var(--forest);
+    color: #d8e8d0;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    border-bottom: 4px solid var(--bark);
+  }
+
+  header .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8aaa7a;
+    margin-bottom: 1rem;
+  }
+
+  header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: #f0ede6;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  header .tagline {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 1.05rem;
+    color: #aabaa0;
+    max-width: 480px;
+    margin: 0 auto;
+    letter-spacing: 0.01em;
+  }
+
+  /* MAIN CONTENT */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* INTRO BLOCK */
+  .intro {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .intro h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 1rem;
+  }
+
+  .intro p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .intro p + p { margin-top: 0.85rem; }
+
+  /* APP CARDS */
+  .apps { padding: 2rem 0; }
+
+  .app-card {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .app-card:last-child { border-bottom: none; }
+
+  .app-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .app-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    padding-top: 3px;
+  }
+
+  .app-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .app-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 3px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .app-subtitle {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+
+  .app-body {
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+
+  .app-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 560px) {
+    .app-details { grid-template-columns: 1fr; }
+  }
+
+  .detail-block {
+    background-color: #ede8dc;
+    border-left: 3px solid var(--accent);
+    padding: 0.9rem 1rem;
+  }
+
+  .detail-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .detail-text {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta {
+    background-color: var(--forest);
+    color: #c8d8c0;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .cta .cta-prompt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #8aaa7a;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.4rem;
+    color: #f0ede6;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .cta p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+    color: #a0b098;
+  }
+
+  .cta a {
+    display: inline-block;
+    background-color: transparent;
+    border: 1.5px solid #8aaa7a;
+    color: #d0e8c8;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    padding: 0.7rem 1.8rem;
+    text-decoration: none;
+    text-transform: lowercase;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .cta a:hover {
+    background-color: #8aaa7a;
+    color: var(--forest);
+  }
+
+  /* FOOTER */
+  footer {
+    background-color: var(--bark);
+    color: #887060;
+    text-align: center;
+    padding: 1.25rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Forestry Operations Software</p>
+  <h1>Lumbermen OS</h1>
+  <p class="tagline">Field-built software for the way forest operations actually work.</p>
+</header>
+
+<main>
+
+  <section class="intro">
+    <h2>The Core Suite</h2>
+    <p>Each application in the Lumbermen OS suite is a bespoke installation tailored to the specific flow of your business. Because no two forestry operations are identical, your apps shouldn't be either.</p>
+    <p>In addition to automated daily reporting, every module grants the enterprise owner the power to request individualized, custom reports from the proprietary database built over time through consistent field use.</p>
+  </section>
+
+  <section class="apps">
+
+    <div class="app-card">
+      <div class="app-header">
+        <span class="app-number">01</span>
+        <span class="app-name">Log Logger</span>
+        <span class="app-tag">Scaling &amp; Inventory</span>
+      </div>
+      <p class="app-subtitle">The Digital Tally Book.</p>
+      <p class="app-body">This is your mobile-first scaling app designed for fast data entry in the yard. It calculates volume instantly using International 1/4", Doyle, and Scribner Decimal C rules.</p>
+      <div class="app-details">
+        <div class="detail-block">
+          <p class="detail-label">Customization</p>
+          <p class="detail-text">Fully adaptable to any scaling operation, moving from paper tallies to a real-time digital inventory.</p>
+        </div>
+        <div class="detail-block">
+          <p class="detail-label">Owner Insight</p>
+          <p class="detail-text">Automated reports run on your schedule, plus the ability to request custom logs-received or species-mix reports at any time from your historical scaling data.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-header">
+        <span class="app-number">02</span>
+        <span class="app-name">Saw Logger</span>
+        <span class="app-tag">Sawmill Management</span>
+      </div>
+      <p class="app-subtitle">The Mill Operations Suite.</p>
+      <p class="app-body">This is the mill operations suite — a digital solution for data collection at the mill, allowing for customized tracking of production and flow.</p>
+      <div class="app-details">
+        <div class="detail-block">
+          <p class="detail-label">Customization</p>
+          <p class="detail-text">Bridges the unique gap between your raw log inventory and your specific physical milling process.</p>
+        </div>
+        <div class="detail-block">
+          <p class="detail-label">Owner Insight</p>
+          <p class="detail-text">Automated reports run on your schedule, plus on-demand queries for custom production trends or efficiency snapshots beyond standard summaries.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-header">
+        <span class="app-number">03</span>
+        <span class="app-name">Cut Mark</span>
+        <span class="app-tag">Yield Analysis</span>
+      </div>
+      <p class="app-subtitle">The Profitability Engine.</p>
+      <p class="app-body">This is your specialized tool for mill studies. It tracks specific log inputs against the finished lumber output to calculate overrun and grade recovery.</p>
+      <div class="app-details">
+        <div class="detail-block">
+          <p class="detail-label">Customization</p>
+          <p class="detail-text">Acts as the "translator" that tells a mill manager exactly how much value they are getting out of every sawlog grade based on their specific equipment.</p>
+        </div>
+        <div class="detail-block">
+          <p class="detail-label">Owner Insight</p>
+          <p class="detail-text">Automated reports run on your schedule, plus deep-dive recovery reports to analyze the long-term impact of specific timber sources on your bottom line.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-header">
+        <span class="app-number">04</span>
+        <span class="app-name">Cordr</span>
+        <span class="app-tag">Firewood Management</span>
+      </div>
+      <p class="app-subtitle">The Order Flow Tool.</p>
+      <p class="app-body">Named to rhyme with "order," this app handles the specific logistics of the firewood business. It manages customer orders and inventory, ensuring processing and delivery stay as organized and on track as the rest of your operation. <a href="https://www.cordr.xyz" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">Visit the Cordr page &rarr;</a></p>
+      <div class="app-details">
+        <div class="detail-block">
+          <p class="detail-label">Customization</p>
+          <p class="detail-text">Built to match your specific delivery zones, moisture requirements, and customer tiers.</p>
+        </div>
+        <div class="detail-block">
+          <p class="detail-label">Owner Insight</p>
+          <p class="detail-text">Automated reports run on your schedule, plus custom reports on regional demand or historical customer ordering patterns.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-header">
+        <span class="app-number">05</span>
+        <span class="app-name">PACE</span>
+        <span class="app-tag">Cost &amp; Productivity</span>
+      </div>
+      <p class="app-subtitle">The Benchmarking Standard.</p>
+      <p class="app-body">PACE — Productivity Analysis and Cost Evaluation — is the benchmarking tool for logging operations. It converts a company's full product mix into a common unit (tons), then calculates cost per ton and tons per machine hour from real overhead, payroll, fuel, and equipment data. The output is a complete cost-by-product report: dollars per MBF for sawlogs, per cord for firewood, per ton for pulpwood and chips.</p>
+      <div class="app-details">
+        <div class="detail-block">
+          <p class="detail-label">Customization</p>
+          <p class="detail-text">Covers cut-to-length, whole-tree, tree-length, and hybrid systems across all major US regions. Conversion factors are adjustable to match local species and market conditions.</p>
+        </div>
+        <div class="detail-block">
+          <p class="detail-label">Owner Insight</p>
+          <p class="detail-text">Generates a complete benchmarking report broken down by product and submittable for regional aggregation — giving individual operators a window into where they stand across the supply chain.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<div class="cta">
+  <p class="cta-prompt">Ready to see it in action?</p>
+  <h3>Every business is unique.<br>Your apps should be too.</h3>
+  <p>Contact Steve Bick for a personalized demonstration of how Lumbermen OS can be installed and customized for your operation.</p>
+  <a href="mailto:steve@northeastforests.com">steve@northeastforests.com</a>
+</div>
+
+<footer>
+  &copy; 2025 Lumbermen OS &mdash; Northeast Forests
+</footer>
+
+</body>
+</html>
